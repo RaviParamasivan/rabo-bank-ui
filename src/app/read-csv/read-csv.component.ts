@@ -20,29 +20,28 @@ export class ReadCsvComponent implements OnInit {
     let csvData = csv;
     let allTextLines = csvData.split(/\r\n|\n/);
     let headers = allTextLines[0].split(',');
-    let lines = [];
-    let headersVal = [];
-    //parseing the header for prime ng table
+    let lineItems = [];
+    let headerItem = [];
+    //parsing the csv header and transforming to primeng table header formate
     for (let i = 0; i < headers.length; i++) {
-      let tarr = {};
-      tarr["field"] = headers[i];
-      tarr["header"] = headers[i];
-      headersVal.push(tarr);
+      let headerTemp = {};
+      headerTemp["field"] = headers[i];
+      headerTemp["header"] = headers[i];
+      headerItem.push(headerTemp);
     }
-    //parseing line for prime ng
+    //parsing the csv line item and transforming to primeng table row formate
     for (let i = 1; i < allTextLines.length; i++) {
-      // split content based on comma
       let data = allTextLines[i].split(',');
       if (data.length == headers.length) {
-        let tarr = {};
+        let lineItemTemp = {};
         for (let j = 0; j < headers.length; j++) {
-          tarr[headers[j]] = data[j];
+          lineItemTemp[headers[j]] = data[j];
         }
-        lines.push(tarr);
+        lineItems.push(lineItemTemp);
       }
     }
-    this.rows = lines;
-    this.hearders = headersVal;
+    this.rows = lineItems;
+    this.hearders = headerItem;
   }
 
   public fileChangeListener(files: FileList) {
