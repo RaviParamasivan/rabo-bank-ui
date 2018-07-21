@@ -40,6 +40,7 @@ export class ReadCsvComponent implements OnInit {
         lineItems.push(lineItemTemp);
       }
     }
+    //Rrrendering the primeng table by assigining the data
     this.rows = lineItems;
     this.hearders = headerItem;
   }

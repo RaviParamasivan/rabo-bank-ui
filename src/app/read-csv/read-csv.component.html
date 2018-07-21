@@ -2,12 +2,28 @@
   <div><input type="file" accept=".csv" class="upload" (change)="fileChangeListener($event.target.files)"></div>  
 </div>
 <br/>
-<p-table [columns]="hearders" [value]="rows" sortMode="multiple"   [paginator]="true" [rows]="5">
+<p-table  #dt [columns]="hearders" [value]="rows" sortMode="multiple"   [paginator]="true" [rows]="5">
+    <ng-template pTemplate="caption">
+        <div style="text-align: right">        
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </div>
+    </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns"  [pSortableColumn]="col.field">
                 {{col.header}}
                 <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                <input *ngSwitchCase="'Reference'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                <input *ngSwitchCase="'AccountNumber'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                <input *ngSwitchCase="'Description'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                <input *ngSwitchCase="'Start Balance'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                
+                <input *ngSwitchCase="'Mutation'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                
+                <input *ngSwitchCase="'End Balance'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">                
             </th>
         </tr>
     </ng-template>
